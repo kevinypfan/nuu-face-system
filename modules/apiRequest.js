@@ -7,7 +7,9 @@ export const createPerson = (fullname, identification) => {
   }, {
   headers: {
     'Ocp-Apim-Subscription-Key': process.env.AZURE_KEY
-  }})
+  }}).catch(error => {
+    return error
+  })
 }
 
 export const addPersonFace = (imgPath, personId) => {
@@ -17,6 +19,8 @@ export const addPersonFace = (imgPath, personId) => {
     }, {headers: {'Ocp-Apim-Subscription-Key': process.env.AZURE_KEY}})
       .then(({data}) => {
         return { path, faceId: data.persistedFaceId }
+      }).catch(error => {
+        return error
       })
   })
 }
