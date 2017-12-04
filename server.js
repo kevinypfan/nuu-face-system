@@ -28,7 +28,7 @@ app.post('/upload', upload, (req, res) => {
   var imgPath = req.files.map((img) => {
     return img.destination.match(pathRegexp)[0] + '/' + img.filename
   })
-
+  
     createPerson(body.fullname, body.identification)
       .then(({data}) => {
         body.personId = data.personId
