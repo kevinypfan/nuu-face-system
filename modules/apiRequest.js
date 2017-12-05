@@ -24,3 +24,9 @@ export const addPersonFace = (imgPath, personId) => {
     })
   })
 }
+
+export const deletePerson = (personId) => {
+   return axios.delete(process.env.API_URL + `/persongroups/${process.env.PERSON_GROUP_ID}/persons/${personId}`, {
+    headers: {'Ocp-Apim-Subscription-Key': process.env.AZURE_KEY}
+  })
+}

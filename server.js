@@ -7,7 +7,7 @@ import _ from 'lodash'
 import { User } from './models/user'
 
 import { upload } from './modules/multerStorage'
-import { createPerson, addPersonFace } from './modules/apiRequest'
+import { createPerson, addPersonFace, deletePerson } from './modules/apiRequest'
 
 const app = express();
 
@@ -28,9 +28,13 @@ app.post('/upload', upload, (req, res) => {
   var imgPath = req.files.map((img) => {
     return img.destination.match(pathRegexp)[0] + '/' + img.filename
   })
-  
-    createPerson(body.fullname, body.identification)
-      .then(({data}) => {
+    User.findOne({identification: body.identification})
+      .then((user) => {
+        if (user) {
+          return Promise.reject('此身份已註冊')
+        }
+        return createPerson(body.fullname, body.identification)
+      }).then(({data}) => {
         body.personId = data.personId
         return Promise.all(addPersonFace(imgPath, body.personId))
       }).then((response) => {
@@ -40,6 +44,7 @@ app.post('/upload', upload, (req, res) => {
       }).then((user) => {
         res.send(user)
       }).catch((error) => {
+        deletePerson(body.personId)
         res.status(400).send(error)
       })
 })
