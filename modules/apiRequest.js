@@ -9,12 +9,10 @@ export const createPerson = (fullname, identification) => {
 
 export const addPersonFace = (imgPath, personId) => {
   return imgPath.map(path => {
-    console.log(`${process.env.LOCAL_URL}${path}`);
     return new Promise((resolve, reject) => {
       return axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/persons/${personId}/persistedFaces`, {
         "url": `${process.env.LOCAL_URL}${path}`
       }).then(({data}) => {
-        console.log(data);
         resolve({ path, faceId: data.persistedFaceId })
       }).catch(error => {
         reject(error)
@@ -25,4 +23,28 @@ export const addPersonFace = (imgPath, personId) => {
 
 export const deletePerson = (personId) => {
    return axios.delete(`/persongroups/${process.env.PERSON_GROUP_ID}/persons/${personId}`)
+}
+
+export const detectPhoto = (path) => {
+  return axios.post('/detect', { url: `${process.env.LOCAL_URL}${path}`})
+}
+
+
+export const identify = (faceId) => {
+  return axios.post('/identify', {
+    "personGroupId": process.env.PERSON_GROUP_ID,
+    "faceIds":[
+        faceId
+      ],
+    "maxNumOfCandidatesReturned":1,
+    "confidenceThreshold": 0.5
+  })
+}
+
+// identify('d72d41a9-0b72-4157-a7be-b7d80ca7a68e').then(res => {
+//   console.log(res.data);
+// })
+
+export const groupsTrain = () => {
+  return axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/train`)
 }

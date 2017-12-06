@@ -1,6 +1,6 @@
 import crypto from 'crypto'
 
-export const randomToken = () => {
-  var token = crypto.randomBytes(5)
+export const randomToken = (bytes) => {
+  var token = crypto.randomBytes(bytes)
   return token.toString('hex')
 }
