@@ -60,6 +60,15 @@ var UserSchema = new mongoose.Schema({
   personId: {
     type: String,
     required: true
+  },
+  company: {
+    type: String
+  },
+  address : {
+    type: String
+  },
+  type: {
+    type: String
   }
 });
 
@@ -68,7 +77,7 @@ UserSchema.methods.updateImage = function (data) {
   data.forEach(d => {
     user.imagePath.push(d)
   })
-  
+
   return user.save()
 }
 

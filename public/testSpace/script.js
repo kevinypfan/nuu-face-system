@@ -1,8 +1,8 @@
 var xargon = {
   "imgPath": [
-    "/person/K123456666/20171206_4e69891cdd.jpg",
-    "/person/K123456666/20171206_521feedd82.jpg",
-    "/person/K123456666/20171206_96e04136e3.jpg"
+    '/person/K123456666/20171207_071750_48d68a4c9b.jpg',
+    '/person/K123456666/20171207_071807_f1e69f78dc.jpg',
+    '/person/K123456666/20171207_071824_d23f464607.jpg'
   ],
   "identification": "K123456666",
   "lastname": "Xargon",
@@ -11,14 +11,17 @@ var xargon = {
   "gender": "male",
   "birthday": "19941211",
   "password": "123456",
-  "email": "asdasdasdasd@ytad.asd"
+  "email": "asdasdasdasd@ytad.asd",
+  'company': 'status',
+  'address': 'status',
+  'type': 'status'
 }
 
 var mate = {
   "imgPath": [
-    "/person/K123456123/20171206_d15903c5d1.JPG",
-    "/person/K123456123/20171206_569934e78d.JPG",
-    "/person/K123456123/20171206_4bb46cb855.JPG"
+    '/person/K123456123/20171207_071909_b3f06463cc.JPG',
+    '/person/K123456123/20171207_071925_1f9de5fccd.JPG',
+    '/person/K123456123/20171207_071941_afde7e288b.JPG'
   ],
   "identification": "K123456123",
   "lastname": "213",
@@ -27,14 +30,17 @@ var mate = {
   "gender": "male",
   "birthday": "19941211",
   "password": "123456",
-  "email": "kkkk@ytad.asd"
+  "email": "kkkk@ytad.asd",
+  'company': 'status',
+  'address': 'status',
+  'type': 'status'
 }
 
 var me = {
   "imgPath": [
-    "/person/K123456666/20171206_a7c8cf4f94.jpg",
-    "/person/K123456666/20171206_1a5db6609f.jpg",
-    "/person/K123456666/20171206_bd79fea748.jpg"
+    '/person/K123456rgr6/20171207_072053_4387fcef65.jpg',
+    '/person/K123456rgr6/20171207_072117_7f012123d7.jpg',
+    '/person/K123456rgr6/20171207_072133_ea848eb18d.jpg'
   ],
   "identification": "K123456rgr6",
   "lastname": "Kevin",
@@ -43,15 +49,28 @@ var me = {
   "gender": "male",
   "birthday": "19941211",
   "password": "123456",
-  "email": "jghjhgjKKKK@werwe.asd"
+  "email": "jghjhgjKKKK@werwe.asd",
+  'company': 'status',
+  'address': 'status',
+  'type': 'status'
 }
 
+
+
 function testPost(payload) {
-  axios.post('/upload', payload).then(res => {
+  return axios.post('/upload', payload).then(res => {
     console.log(res);
   }).catch(err => {
     console.log(err);
   })
 }
 
-testPost(me)
+testPost(me).then(res => {
+  return testPost(mate)
+}).then(res => {
+  return testPost(xargon)
+}).then(res => {
+  console.log(res);
+})
+
+console.log(moment().valueOf())

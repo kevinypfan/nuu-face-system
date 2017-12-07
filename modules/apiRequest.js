@@ -37,13 +37,10 @@ export const identify = (faceId) => {
         faceId
       ],
     "maxNumOfCandidatesReturned":1,
-    "confidenceThreshold": 0.5
+    "confidenceThreshold": 0.6
   })
 }
 
-// identify('d72d41a9-0b72-4157-a7be-b7d80ca7a68e').then(res => {
-//   console.log(res.data);
-// })
 
 export const groupsTrain = () => {
   return axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/train`)
