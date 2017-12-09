@@ -8,6 +8,7 @@ import { User } from './models/user'
 import { Record } from './models/record'
 import bodyParser from 'body-parser'
 
+import { base64ToFile } from './modules/base64ToFile'
 import { upload, checkUpload } from './modules/multerStorage'
 import { createPerson, addPersonFace, deletePerson, detectPhoto, identify, groupsTrain } from './modules/apiRequest'
 import { populate } from './modules/dbSetting'
@@ -21,6 +22,15 @@ mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true });
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie, token')
+  res.header('Access-Control-Expose-Headers', 'token');
+  next();
+});
 
 app.post('/upload', (req, res) => {
   const body = _.pick(req.body, ['lastname', 'firstname', 'phone', 'gender', 'identification', 'birthday', 'password', 'email', 'imgPath', 'company', 'address', 'type' ])
@@ -62,10 +72,13 @@ app.post('/photoCheck', upload, (req, res) => {
   })
 })
 
-app.post('/identify', upload, (req, res) => {
-  var pathRegexp = new RegExp("\/person.*");
-  var imgPath = req.file.destination.match(pathRegexp)[0] + '/' + req.file.filename
-  detectPhoto(imgPath).then((response) => {
+app.post('/identify', (req, res) => {
+
+  base64ToFile(req.body.image)
+  .then((imagePath) => {
+    console.log(imagePath);
+    return detectPhoto(imagePath)
+  }).then((response) => {
     if (response.data.length == 0) {
       res.send("此相片無法使用")
     } else {
