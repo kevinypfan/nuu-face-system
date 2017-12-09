@@ -116,6 +116,15 @@ app.post('/identify', upload, (req, res) => {
 })
 
 
+app.get('/getRecord', (req, res) => {
+  Record.find().populate({
+    path: 'staff',
+    select: ['email','fullname','phone','identification', 'birthday','imagePath','company','address', 'type']
+  }).then((record) => {
+    res.send(record)
+  })
+})
+
 app.listen(process.env.PORT, () => {
   console.log( `[${moment(Date.now()).format("YYYY-MM-DD HH:MM:SS")}]--> start up post ${process.env.PORT}` )
 })
