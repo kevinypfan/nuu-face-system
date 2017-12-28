@@ -63,8 +63,9 @@ app.post('/photoCheck', upload, (req, res) => {
   var imgPath = req.file.destination.match(pathRegexp)[0] + '/' + req.file.filename
   detectPhoto(imgPath).then((response) => {
     if (response.data.length == 0) {
-      res.send("此相片無法使用")
+      res.status(403).send("此相片無法使用")
     } else {
+      console.log(response.data);
       res.send(imgPath)
     }
   }).catch((error) => {
@@ -90,6 +91,7 @@ app.post('/identify', (req, res) => {
     if (data[0].candidates.length == 0) {
       return Promise.reject("找不到這個人")
     }
+    console.log(data[0]);
     return User.findOne({personId: data[0].candidates[0].personId})
   }).then((result) => {
     req.body = _.pick(result, ['_id', 'company', 'type', 'fullname'])
