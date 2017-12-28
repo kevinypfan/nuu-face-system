@@ -6,6 +6,9 @@ import moment from 'moment'
 import _ from 'lodash'
 import { User } from './models/user'
 import { Record } from './models/record'
+
+import companyRouter from './api/company'
+
 import bodyParser from 'body-parser'
 
 import { base64ToFile } from './modules/base64ToFile'
@@ -31,6 +34,18 @@ app.all('/*', function(req, res, next) {
   res.header('Access-Control-Expose-Headers', 'token');
   next();
 });
+
+app.use('/company', companyRouter)
+
+app.get('/test', (req, res) => {
+  User.find().populate({
+    path: 'company',
+    select: ['name', 'id', 'principal', 'address', 'phone', 'email']
+  }).then(result => {
+    res.send(result)
+  })
+})
+
 
 app.post('/upload', (req, res) => {
   const body = _.pick(req.body, ['lastname', 'firstname', 'phone', 'gender', 'identification', 'birthday', 'password', 'email', 'imgPath', 'company', 'address', 'type' ])
