@@ -2,7 +2,8 @@
 /node_modules/
 /build/
 .DS_Store
-/public/person/check
+/public/person/check/*.jpeg
 /public/person/K123456666
 /public/person/K123456667
 /public/person/M12345678
+/public/person/K123456789/
