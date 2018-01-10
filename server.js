@@ -77,6 +77,7 @@ app.post('/photoCheck', upload, (req, res) => {
   var pathRegexp = new RegExp("\/person.*");
   var imgPath = req.file.destination.match(pathRegexp)[0] + '/' + req.file.filename
   detectPhoto(imgPath).then((response) => {
+    console.log(response.data);
     if (response.data.length == 0) {
       res.status(403).send("此相片無法使用")
     } else {
