@@ -3,44 +3,46 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 
-var CompanySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 1
-  },
-  id: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  principal: {
-    type: String
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6
-  },
-  address: {
-    type: String
-  },
-  phone: {
-    type: String
-  },
-  email: {
-    type: String
-  },
-  tokens: [{
-    token: {
+var CompanySchema = new mongoose.Schema(
+  {
+    name: {
       type: String,
-      required: true
-    }
-  }],
+      required: true,
+      minlength: 1
+    },
+    id: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    principal: {
+      type: String
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6
+    },
+    address: {
+      type: String
+    },
+    phone: {
+      type: String
+    },
+    email: {
+      type: String
+    },
+    tokens: [{
+      token: {
+        type: String,
+        required: true
+      }
+    }]
+  },
   {
       usePushEach: true
   }
-});
+);
 
 
 CompanySchema.methods.generateAuthToken = function () {
