@@ -108,12 +108,14 @@ app.post('/identify', (req, res) => {
     }
 
   }).then(({data}) => {
+    console.log(data);
     if (data[0].candidates.length == 0) {
       return Promise.reject("找不到這個人")
     }
     console.log(data[0]);
     return User.findOne({personId: data[0].candidates[0].personId})
   }).then((result) => {
+    console.log('here');
     req.body = _.pick(result, ['_id', 'company', 'type', 'fullname'])
     return Record.find({staff: req.body._id}).sort({_id: -1})
   }).then((record) => {
