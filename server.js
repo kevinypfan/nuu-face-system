@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGODB_URL, { useMongoClient: true });
 
 
 app.use(express.static('public'))
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 app.use(bodyParser.json({limit: '50mb'}))
 
 app.all('/*', function(req, res, next) {
