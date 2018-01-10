@@ -1,9 +1,16 @@
 import axios from './axiosInstance'
 
 export const createPerson = (fullname, identification) => {
-  return axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/persons`, {
-  "name": fullname,
-  "userData": identification
+  return new Promise((resolve, reject) => {
+    axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/persons`, {
+    "name": fullname,
+    "userData": identification
+    })
+    .then(result => {
+      resolve(result)
+    }).catch(err => {
+      reject(err)
+    })
   })
 }
 
@@ -22,26 +29,54 @@ export const addPersonFace = (imgPath, personId) => {
 }
 
 export const deletePerson = (personId) => {
-   return axios.delete(`/persongroups/${process.env.PERSON_GROUP_ID}/persons/${personId}`)
+   return new Promise((resolve, reject) => {
+      axios.delete(`/persongroups/${process.env.PERSON_GROUP_ID}/persons/${personId}`)
+        .then(result => {
+          resolve(result)
+        }).catch(err => {
+          reject(err)
+        })
+   })
 }
 
 export const detectPhoto = (path) => {
-  return axios.post('/detect', { url: `${process.env.LOCAL_URL}${path}`})
+   return new Promise((resolve, reject) => {
+     axios.post('/detect', { url: `${process.env.LOCAL_URL}${path}`})
+       .then(result => {
+         resolve(result)
+       }).catch(err => {
+         reject(err)
+       })
+  })
 }
 
 
 export const identify = (faceId) => {
-  return axios.post('/identify', {
-    "personGroupId": process.env.PERSON_GROUP_ID,
-    "faceIds":[
-        faceId
-      ],
-    "maxNumOfCandidatesReturned":1,
-    "confidenceThreshold": 0.6
+  return new Promise((resolve, reject) => {
+    axios.post('/identify', {
+      "personGroupId": process.env.PERSON_GROUP_ID,
+      "faceIds":[
+          faceId
+        ],
+      "maxNumOfCandidatesReturned":1,
+      "confidenceThreshold": 0.6
+    })
+    .then(result => {
+      resolve(result)
+    }).catch(err => {
+      reject(err)
+    })
   })
 }
 
 
 export const groupsTrain = () => {
-  return axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/train`)
+  return new Promise((resolve, reject) => {
+    axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/train`)
+    .then(result => {
+      resolve(result)
+    }).catch(err => {
+      reject(err)
+    })
+  })
 }
