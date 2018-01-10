@@ -13,6 +13,8 @@ companyRouter.post('/signup',(req, res) => {
   company.save().then(() => {
     return Promise.all([company.generateAuthToken(), company.toJson()])
   }).then(([token, company]) => {
+    console.log(token)
+    console.log(company);
     res.header('token', token).send(company);
   }).catch((e) => {
     if (e.code == '11000') {
