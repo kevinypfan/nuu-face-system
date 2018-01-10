@@ -13,7 +13,7 @@ import bodyParser from 'body-parser'
 
 import { base64ToFile } from './modules/base64ToFile'
 import { upload, checkUpload } from './modules/multerStorage'
-import { createPerson, addPersonFace, deletePerson, detectPhoto, identify, groupsTrain } from './modules/apiRequest'
+import { createPerson, addPersonFace, deletePerson, detectPhoto, identify, groupsTrain, trainStatus } from './modules/apiRequest'
 import { populate } from './modules/dbSetting'
 
 const app = express();
@@ -95,7 +95,15 @@ app.post('/photoCheck', upload, (req, res) => {
 
 app.post('/identify', (req, res) => {
   console.log('identify');
-  base64ToFile(req.body.image)
+  trainStatus().then(result => {
+    if (result.data.status === 'failed') {
+      groupsTrain().then(trained => {
+        return base64ToFile(req.body.image)
+      })
+    } else {
+      return base64ToFile(req.body.image)
+    }
+  })
   .then((imagePath) => {
     console.log(imagePath);
     return detectPhoto(imagePath)
