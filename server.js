@@ -94,7 +94,7 @@ app.post('/photoCheck', upload, (req, res) => {
 })
 
 app.post('/identify', (req, res) => {
-
+  console.log('identify');
   base64ToFile(req.body.image)
   .then((imagePath) => {
     console.log(imagePath);
