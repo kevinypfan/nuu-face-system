@@ -120,9 +120,14 @@ app.post('/identify', (req, res) => {
     console.log(data[0]);
     return User.findOne({personId: data[0].candidates[0].personId})
   }).then((result) => {
-    console.log('here');
-    req.body = _.pick(result, ['_id', 'company', 'type', 'fullname'])
-    return Record.find({staff: req.body._id}).sort({_id: -1})
+    if (result.comfirm) {
+      req.body = _.pick(result, ['_id', 'company', 'type', 'fullname'])
+      return Record.find({staff: req.body._id}).sort({_id: -1})
+    }
+    res.status(402).send({
+      error: 'error',
+      message: '此人不屬於此公司或公司尚未認證'
+    })
   }).then((record) => {
     if (record.length == 0) {
       let record = new Record({
