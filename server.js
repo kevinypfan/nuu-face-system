@@ -94,7 +94,7 @@ app.post('/photoCheck', upload, (req, res) => {
 })
 
 app.post('/identify', (req, res) => {
-  console.log('identify');
+  console.log(req.body.image);
   trainStatus().then(result => {
     if (result.data.status === 'failed') {
       groupsTrain().then(trained => {
