@@ -80,3 +80,18 @@ export const groupsTrain = () => {
     })
   })
 }
+
+export const trainStatus = () => {
+  return new Promise((resolve, reject) => {
+    axios.get(`/persongroups/${process.env.PERSON_GROUP_ID}/training`)
+    .then(result => {
+      resolve(result)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+trainStatus().then(result => {
+  console.log(result.data);
+})
