@@ -106,7 +106,10 @@ app.post('/identify', (req, res) => {
     return detectPhoto(imagePath)
   }).then((response) => {
     if (response.data.length == 0) {
-      res.status(404).send("此相片無法使用")
+      return Promise.reject({
+        error: 'error',
+        message: '此相片無法使用'
+      })
     } else {
       console.log(response.data[0].faceId);
       return identify(response.data[0].faceId)
