@@ -56,15 +56,19 @@ app.post('/upload', (req, res) => {
         if (user) {
           return Promise.reject('此身份已註冊')
         }
+        console.log('1')
         return createPerson(body.fullname, body.identification)
       }).then(({data}) => {
         body.personId = data.personId
+        console.log('2')
         return Promise.all(addPersonFace(body.imgPath, body.personId))
       }).then((response) => {
         body.imagePath = response
         let user = new User(body)
+        console.log('3')
         return Promise.all([user.save(), groupsTrain()])
       }).then(([user, {data}]) => {
+        console.log('4')
         console.log(data);
         res.send(user)
       }).catch((error) => {
