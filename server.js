@@ -120,6 +120,7 @@ app.post('/identify', (req, res) => {
     console.log(data[0]);
     return User.findOne({personId: data[0].candidates[0].personId})
   }).then((result) => {
+    console.log(result)
     if (result.comfirm) {
       req.body = _.pick(result, ['_id', 'company', 'type', 'fullname'])
       return Record.find({staff: req.body._id}).sort({_id: -1})
