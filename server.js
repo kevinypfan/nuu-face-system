@@ -124,7 +124,7 @@ app.post('/identify', (req, res) => {
       req.body = _.pick(result, ['_id', 'company', 'type', 'fullname'])
       return Record.find({staff: req.body._id}).sort({_id: -1})
     }
-    res.status(402).send({
+    return Promise.reject({
       error: 'error',
       message: '此人不屬於此公司或公司尚未認證'
     })
