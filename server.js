@@ -115,7 +115,10 @@ app.post('/identify', (req, res) => {
   }).then(({data}) => {
     console.log(data);
     if (data[0].candidates.length == 0) {
-      return Promise.reject("找不到這個人")
+      return Promise.reject({
+        error: 'error',
+        message: '找不到此人'
+      })
     }
     console.log(data[0]);
     return User.findOne({personId: data[0].candidates[0].personId})
@@ -124,11 +127,12 @@ app.post('/identify', (req, res) => {
     if (result.comfirm) {
       req.body = _.pick(result, ['_id', 'company', 'type', 'fullname'])
       return Record.find({staff: req.body._id}).sort({_id: -1})
+    } else {
+      return Promise.reject({
+        error: 'error',
+        message: '此人不屬於此公司或公司尚未認證'
+      })
     }
-    return Promise.reject({
-      error: 'error',
-      message: '此人不屬於此公司或公司尚未認證'
-    })
   }).then((record) => {
     if (record.length == 0) {
       let record = new Record({
