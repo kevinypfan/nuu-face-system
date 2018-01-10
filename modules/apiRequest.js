@@ -91,7 +91,3 @@ export const trainStatus = () => {
     })
   })
 }
-
-trainStatus().then(result => {
-  console.log(result.data);
-})
