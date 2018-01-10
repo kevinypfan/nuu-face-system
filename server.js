@@ -67,9 +67,9 @@ app.post('/upload', (req, res) => {
         let user = new User(body)
         console.log('3')
         return Promise.all([user.save(), groupsTrain()])
-      }).then(([user, result]) => {
+      }).then(([user, {data}]) => {
         console.log('4')
-        console.log(result.data);
+        console.log(data);
         res.send(user)
       }).catch((error) => {
         deletePerson(body.personId)
