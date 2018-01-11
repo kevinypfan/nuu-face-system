@@ -17,7 +17,7 @@ export const createPerson = (fullname, identification) => {
 export const addPersonFace = (imgPath, personId) => {
   return imgPath.map(path => {
     return new Promise((resolve, reject) => {
-      return axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/persons/${personId}/persistedFaces`, {
+      axios.post(`/persongroups/${process.env.PERSON_GROUP_ID}/persons/${personId}/persistedFaces`, {
         "url": `${process.env.LOCAL_URL}${path}`
       }).then(({data}) => {
         resolve({ path, faceId: data.persistedFaceId })
