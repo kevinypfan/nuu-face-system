@@ -4,6 +4,7 @@ const companyRouter = express.Router();
 
 import { Company } from '../models/company'
 import { User } from '../models/user'
+import { Record } from '../models/record'
 
 import authenticate from '../middleware/authenticate'
 
