@@ -79,7 +79,7 @@ companyRouter.get('/getSignup', authenticate, (req, res) => {
 })
 
 companyRouter.put('/success', authenticate, (req, res) => {
-  User.findOneAndUpdate({'_id': req.body.id, company: req.company._id, comfirm: false}, { $set: { comfirm: true }})
+  User.findOneAndUpdate({'_id': req.body.id, company: req.company._id, comfirm: false}, { $set: { comfirm: true, type: req.body.type }})
     .then(result => {
       if (!result) {
         res.status(404).json({
