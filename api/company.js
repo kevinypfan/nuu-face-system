@@ -14,7 +14,10 @@ companyRouter.get('/getRecord', authenticate, (req, res) => {
     path: 'staff',
     select: ['email','fullname','phone','identification', 'birthday','imagePath','company','address', 'type']
   }).then((record) => {
-    res.send(record)
+    var filterData = record.filter((r) => {
+      return r.staff.company === req.company._id
+    })
+    res.send(filterData)
   })
 })
 
