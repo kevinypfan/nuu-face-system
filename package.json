@@ -1,7 +1,6 @@
 {
   "name": "nuu-face-project",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "npm-run-all --parallel dev:*",
