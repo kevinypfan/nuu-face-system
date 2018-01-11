@@ -7,6 +7,17 @@ import { User } from '../models/user'
 
 import authenticate from '../middleware/authenticate'
 
+
+companyRouter.get('/getRecord', authenticate, (req, res) => {
+  Record.find({'staff.company': req.company._id}).populate({
+    path: 'staff',
+    select: ['email','fullname','phone','identification', 'birthday','imagePath','company','address', 'type']
+  }).then((record) => {
+    res.send(record)
+  })
+})
+
+
 companyRouter.post('/signup',(req, res) => {
   var body = _.pick(req.body, ['name', 'id', 'principal', 'password', 'address', 'phone', 'email'])
   var company = new Company(body);
