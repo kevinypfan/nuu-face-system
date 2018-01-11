@@ -16,10 +16,10 @@ companyRouter.get('/getRecord', authenticate, (req, res) => {
     select: ['email','fullname','phone','identification', 'birthday','imagePath','company','address', 'type']
   }).then((record) => {
     console.log(record);
-    // var filterData = record.filter((r) => {
-    //   return r.staff.company.toHexString() === req.company._id.toHexString()
-    // })
-    res.send(record)
+    let filterData = record.filter((r) => {
+      return r.staff.company === req.company._id.toHexString()
+    })
+    res.send(filterData)
   })
 })
 
