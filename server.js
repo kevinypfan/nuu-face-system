@@ -165,8 +165,10 @@ app.post('/identify', (req, res) => {
       }
     }
   }).then((result) => {
+    console.log('identify success');
     res.send(result)
   }).catch((error) => {
+    console.log('identify fail');
     res.status(400).send(error)
   })
 })
