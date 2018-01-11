@@ -49,14 +49,9 @@ var UserSchema = new mongoose.Schema({
   birthday: {
     type: String
   },
-  imagePath: [{
-    path: {
-      type: String
-    },
-    faceId: {
-      type: String
-    }
-  }],
+  imagePath: {
+    type: Array
+  },
   personId: {
     type: String,
     required: true
