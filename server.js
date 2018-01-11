@@ -63,6 +63,7 @@ app.post('/upload', (req, res) => {
         console.log('2')
         return addPersonFace(body.imgPath, body.personId)
       }).then((response) => {
+        console.log(response)
         body.imagePath = response
         let user = new User(body)
         console.log('3')
