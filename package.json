@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm-run-all --parallel dev:*",
     "dev:build": "webpack --watch",
-    "dev:server": "nodemon build/bundle.js"
+    "dev:server": "nodemon build/bundle.js",
+    "prod": "webpack && node build/bundle.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
