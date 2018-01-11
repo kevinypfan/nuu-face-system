@@ -61,7 +61,7 @@ app.post('/upload', (req, res) => {
       }).then(({data}) => {
         body.personId = data.personId
         console.log('2')
-        return addPersonFace(body.imgPath, body.personId)
+        return Promise.all(addPersonFace(body.imgPath, body.personId))
       }).then((response) => {
         console.log(response)
         body.imagePath = response
