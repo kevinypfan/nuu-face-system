@@ -10,6 +10,7 @@ import authenticate from '../middleware/authenticate'
 
 
 companyRouter.get('/getRecord', authenticate, (req, res) => {
+  console.log(req.company);
   Record.find().populate({
     path: 'staff',
     select: ['email','fullname','phone','identification', 'birthday','imagePath','company','address', 'type']
