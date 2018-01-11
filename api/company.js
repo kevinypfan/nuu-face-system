@@ -15,7 +15,7 @@ companyRouter.get('/getRecord', authenticate, (req, res) => {
     select: ['email','fullname','phone','identification', 'birthday','imagePath','company','address', 'type']
   }).then((record) => {
     var filterData = record.filter((r) => {
-      return r.staff.company === req.company._id
+      return r.staff.company.toHexString() === req.company._id.toHexString()
     })
     res.send(filterData)
   })
